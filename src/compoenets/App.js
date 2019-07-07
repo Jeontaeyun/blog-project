@@ -1,24 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ListPage, PostPage, EditorPage, NotFoundPage } from '../pages';
+import { Switch, Route } from 'react-router-dom';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Switch>
+        <Route exact path='/' component={ListPage}/>
+        <Route path='/page/:page' component={ListPage}/>
+        <Route path='/tag/:tag/:page?' component={ListPage}/>
+        <Route path='/post/:id' component={PostPage}/>
+        <Route path='/editor' component={EditorPage}/>
+        <Route component={NotFoundPage}/>
+      </Switch>
     </div>
   );
 }

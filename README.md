@@ -8,7 +8,7 @@
 
 - **Framework** : React.js
 
-- **Database** : Mongoose
+- **State Management** : Redux
 
 ## 02. 프로젝트 이론
 
