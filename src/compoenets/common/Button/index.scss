@@ -1,0 +1,73 @@
+@import '../../../styles/utils.scss';
+
+.button {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    /* 
+    브라우저에서 드래그나 더블 클릭을 사용한 텍스트 선택 등을 막으려는 방법
+    user-select : auto | all | none | text;
+    auto : Default 값으로 브라우저 허용시 텍스트 선택 가능
+    all : 더블클릭이 아닌 클릭 만으로도 선택이 가능
+    none : 텍스트 선택 안됨
+    text : 텍스트 선택이 가능
+    */
+    display: inline-flex;
+
+    &.default {
+        background: $oc-red-6;
+        &:hover {
+            background: $oc-red-5;
+        }
+        &:active {
+            background: $oc-red-6;
+        }
+    }
+
+    &.gray {
+        background: $oc-gray-7;
+        &:hover {
+            background: $oc-gray-6;
+        }
+        &:active {
+            background: $oc-gray-7;
+        }
+    }
+    
+    &.outline {
+        border: 2px solid white;
+        border-radius: 2px;
+        &:hover {
+            background: white;
+            color: $oc-blue-6;
+        }
+        &:active {
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid rgba(255, 255, 255, 0.85);
+        }
+    }
+    &:hover{
+        @include material-shadow(2,0.5);
+    }
+
+    &.disabled {
+        background: $oc-gray-4;
+        color: $oc-gray-6;
+        cursor: default;
+        &:hover, &:active {
+            box-shadow: none;
+            background: $oc-gray-4;
+        }
+    }
+
+    & + & {
+        margin-left: 0.5rem;
+        // 버튼 두 개 이상이 함께 있다면 중간 여백
+    }
+}

@@ -1,0 +1,51 @@
+@import '../../../styles/utils.scss';
+
+.post-list{
+    .post-item{
+        padding: 1.5rem;
+        transition: all .15s ease-in;
+        h2 {
+            font-size: 2rem;
+            font-weight: 400;
+            margin: 0;
+            color : $oc-gray-8;
+            a{
+                transition: all .15s ease-in;
+                //스타일이 바뀔 때 애니메이션 효과
+                border-bottom: 1px solid transparent;
+            }
+            a:hover {
+                color: $oc-red-9;
+                border-bottom: 1px solid $oc-red-9;
+            }
+        }
+        .date {
+            font-size: 0.85rem;
+            color: $oc-gray-5;
+        }
+        p{
+            font-weight: 300;
+            color: $oc-gray-9;
+        }
+        .tags {
+            font-size: 0.85rem;
+            color: $oc-red-6;
+            a{
+                &:hover {
+                    color: $oc-red-5;
+                    text-decoration: underline;
+                }
+            }
+            a + a {
+                margin-left: 0.25rem;
+            }
+        }
+        &:hover {
+            background: rgba($oc-red-6, 0.05);
+        }
+    }
+    // 해당 클래스나 태그들 사이에 적용해주는 마진이나 테두리는 + 선택자를 이용한다.
+    .post-item + .post-item {
+        border-top: 1px solid $oc-gray-3;
+    }
+}

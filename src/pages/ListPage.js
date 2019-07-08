@@ -1,9 +1,18 @@
 import React from 'react';
+import PageTemplate from '../compoenets/common/PageTemplate';
+import ListWrapper from '../compoenets/list/ListWrapper';
+import PostList from '../compoenets/list/PostList';
+import Pagination from '../compoenets/list/Pagination';
 
 const ListPage = () => {
     return(
         <div>
-            List
+            <PageTemplate>
+                <ListWrapper>
+                    <PostList/>
+                </ListWrapper>
+                <Pagination/>
+            </PageTemplate>
         </div>
     );
 };

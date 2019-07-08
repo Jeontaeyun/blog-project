@@ -1,0 +1,29 @@
+@import '../../../styles/utils.scss';
+
+.footer {
+    background: $oc-gray-8;
+    height: 10rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .brand{
+        color: white;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    .admin-login{
+        
+        margin-top: 0.5rem;
+        font-weight: 600;
+        font-size: 0.8rem;
+        color: rgba(255,255,255,0.8);
+        cursor: pointer;
+        &:hover{
+            color:white;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+@import '../../../styles/utils.scss';
+
+.pagination {
+    margin-top: 2rem;
+
+    display: flex;
+    align-items: center;
+
+    .number{
+        font-size: 0.85rem;
+        text-align: center;
+        color: $oc-gray-6;
+        flex: 1
+        /*남는 공간 모두 차지하기*/
+    }
+}

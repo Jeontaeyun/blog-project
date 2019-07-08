@@ -1,0 +1,32 @@
+@import '../../../styles/utils.scss';
+
+.header {
+    background: $oc-red-9;
+    .header-content{
+        height: 5rem;
+        width: 1400px;
+        margin: 0 auto;
+        padding-left: 3rem;
+        padding-right: 3rem;
+
+        display: flex;
+        align-items: center;
+
+        @include media("<wide"){
+            width: 100%;
+        }
+        @include media("<medium"){
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .right {
+            margin-left : auto;
+        }
+    }
+}
