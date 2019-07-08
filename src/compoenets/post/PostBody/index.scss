@@ -15,5 +15,6 @@
         width:1024px;
         @include media("<large"){width: 768px;}
         @include media("<medium"){width: calc(100% - 2rem);}
+        /* calc 는 띄어쓰기를 해주어야 한다. */
     }
 }

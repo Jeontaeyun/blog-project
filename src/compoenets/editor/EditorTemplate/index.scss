@@ -1,0 +1,23 @@
+@import '../../../styles/utils.scss';
+
+.editor-template{
+    .panes {
+        height: calc(100vh - 4rem);
+        display: flex;
+        position: relative;
+        .pane{
+            display: flex;
+            min-width: 0;
+            overflow: auto;
+            flex:1;
+        }
+        .separator {
+            width: 0.1rem;
+            height: 100%;
+            position: absolute;
+            transform: translate(-50%);
+            cursor: col-resize;     //리사이즈 커서
+            background: black;
+        }
+    }
+}

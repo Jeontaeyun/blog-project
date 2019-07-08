@@ -74,3 +74,21 @@
     - yarn add include-media 를 통해 설치 가능
 
     - 반응형 디자인을 쉽게 적용할 수 있다.
+
+### (03) classNames 라이브러리
+
+- yarn add classnames 로 설치 가능
+
+- 여러 개의 클래스를 적용할 수 있도록 해주는 자바스크립트 라이브러리
+
+```javascripts
+import classNames from 'classnames/bind';
+import styles from 'sass file';
+
+const cx = classNames.bind(styles);
+...
+
+<div className={cx('box','blue')}></div>
+```
+
+- 위와 같이 SASS파일이 적용되는 class 이름을 여러 개 만들 수 있도록 해준다.
