@@ -37,7 +37,7 @@ class EditorTemplate extends Component {
         };
 
         const rightStyle = {
-            flex: 1- leftPercentage
+            flex: 1 - leftPercentage
         }
 
         const separatorStyle = {

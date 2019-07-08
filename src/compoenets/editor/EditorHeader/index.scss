@@ -1,1 +1,17 @@
 @import '../../../styles/utils.scss';
+
+.editor-header {
+    background: $oc-red-9;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    padding-right: 1rem;
+    padding-left : 1rem;
+    .back {
+
+    }
+
+    .submit {
+        margin-left: auto;
+    }
+}
