@@ -10,8 +10,8 @@ const ListPage = () => {
             <PageTemplate>
                 <ListWrapper>
                     <PostList/>
+                    <Pagination/>
                 </ListWrapper>
-                <Pagination/>
             </PageTemplate>
         </div>
     );
