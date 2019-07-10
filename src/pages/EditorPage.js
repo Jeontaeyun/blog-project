@@ -1,15 +1,15 @@
 import React from 'react';
 import EditorTemplate from '../compoenets/editor/EditorTemplate';
 import EditorHeader from '../compoenets/editor/EditorHeader';
-import EditorPane from '../compoenets/editor/EditorPane';
 import PreviewPane from '../compoenets/editor/PreviewPane';
+import EditorPaneContainer from '../containers/editor/EditorPaneContainer';
 
 const EditorPage = () => {
     return(
         <div>
             <EditorTemplate
                 header = {<EditorHeader/>}
-                editor = {<EditorPane/>}
+                editor = {<EditorPaneContainer/>}
                 preview = {<PreviewPane/>}
             />
         </div>

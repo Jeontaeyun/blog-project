@@ -107,3 +107,73 @@ CodeMirror | 코드 에디터 라이브러리입니다. 코드에 색상을 입�
 marked     | 에디터에서 작성한 마크다운을 HTML로 변환해주는 라이브러리
 Prismjs    | 코드 블록을 아름답게 꾸며주는 라이브러리
 
+### (05) 리덕스 사용하기 | Redux
+
+개념    | 설명
+---    | ---------------------------------------
+스토어 Store| 애플리케이션의 상태 값들을 내장하는 저장 공간
+액션 Action| 상태를 변화시킬 때 참조하는 객체, 어떤 종류의 액션이 있는지를 정의
+디스패치 Dispatch | 액션을 스토에어 전달하는 것을 의미, 즉 액션을 실행시키는 함수
+리듀서 Reducer  | 각 액션에 따른 상태 변화 로직을 정희하고 있는 함수
+구독 Subscription    | 스토어 값이 필요한 컴포넌트는 스토어를 구독한다고 한다.
+
+- 리덕스는 리액트에서 사용하려고 만든 상태 관리 라이브러리이다. 하지만 리액트에 의존하지 않아 별도로 리액트와 연결해주는 react-redux 라이브러리를 이용해야 한다.
+
+#### 01) 리듀서 | Reducer
+
+- 리듀서는 변화를 일으키는 함수입니다. 리듀서는 현재 상태인 state와 Action 두 개의 파라미터를 받습니다.
+
+- 함수 내부에서 switch 문을 사용하여 action.type에 따라 새로운 상태를 만들어서 반환합니다.
+
+#### 02) components와 containers 폴더
+
+- 리덕스를 사용할 때 **components 폴더**에는 상태에 대한 부분을 제외한 컴포넌트에 대한 구현만을 한다.
+
+- 반면, **containers 폴더** 안에는 컴포넌트를 불러와 리덕스와 연결해 상태에 대한 구현을 해주는 컴포넌트를 보관한다.
+
+#### 03) Redux-actions 라이브러리
+
+메소드         | 설명
+-------------| ----------
+createAction | - Redux의 액션을 쉽게 생성해주는 함수<br>- ``` export const decrement = createAction('typeName') ```
+handleActions | - 기존의 switch 문으로 구현된 리듀서를 쉽게 구현하는 함수
+
+[구현 예시]
+
+```javascript
+
+/*
+마크다운 에디터 상태를 다룹니다.
+ */
+
+import { createAction, handleActions } from 'redux-actions';
+
+import { Map } from 'immutable';
+import { pender } from 'redux-pender';
+
+//Action의 Type에 대한 명명을 정의하는 부분
+const INITIALIZE = 'editor/INITIALIZE' ;
+const CHANGE_INPUT = 'editor/CHANGE_INPUT' ;
+
+//redux-actions 라이브러리를 활용한 Action을 생성을 구현
+export const initialize = createAction(INITIALIZE);
+export const changeInput = createAction(CHANGE_INPUT);
+
+//Initial State를 구현하는 부분
+const initialState = Map({
+    title: '',
+    markdown: '',
+    tags: ''
+});
+
+//redux-actions라이브러리를 이용하여 Reducer를 switch구문 없이 구현
+export default handleActions({
+    /*액션 타입에 접두사가 있을 경우 INITIALIZE가 아니라 [INITIALIZE]와 같이 구현해야 한다.*/
+    [INITIALIZE]: (state, action) => initialState,
+    [CHANGE_INPUT]: (state, action) => {
+        const {name , value} = action.payload;
+        return state.set(name, value);
+    }
+}, initialState);
+
+```
