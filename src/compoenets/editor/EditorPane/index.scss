@@ -13,13 +13,21 @@
         padding : 1rem;
         color : white;
         font-weight: 500;
+        /*placehollder의 스타일을 따로 지정해 줄 수 있다.*/
         &::placeholder{
             color: rgba(255, 255, 255, 0.75);
         }
     }
     .code-editor {
-        flex: 1;
-        background: $oc-gray-7;
+        flex: 1;            // 남는 영역 모두 차지
+        background: $oc-gray-9;
+        display: flex ;
+        flex-direction: column; // .CodeMirror가 세로 영역을 전부 차지
+        .CodeMirror{
+            font-size: 0.9rem;
+            flex: 1;
+            font-family: 'D2 Coding' ;
+        }
     }
     .tags{
         padding-left: 1rem;
