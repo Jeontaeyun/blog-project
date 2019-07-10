@@ -28,6 +28,7 @@ class EditorPane extends Component {
             lineWrapping: true              // 내용이 너무 길면 다음 줄에 작성
         });
         this.codeMirror.on('change', this.handleChangeMarkdown);
+        /*CodeMirror에서 제공하는 change가 되면 자동으로 handleChangeMarkdown이 실행됨*/
     }
 
     componentDidMount(){

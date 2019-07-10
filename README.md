@@ -168,12 +168,34 @@ const initialState = Map({
 
 //redux-actions라이브러리를 이용하여 Reducer를 switch구문 없이 구현
 export default handleActions({
-    /*액션 타입에 접두사가 있을 경우 INITIALIZE가 아니라 [INITIALIZE]와 같이 구현해야 한다.*/
+    /*
+    액션 타입에 접두사가 있을 경우 INITIALIZE가 아니라 [INITIALIZE]와 같이 구현해야 한다.
+    action.payload를 통해서
+    */
     [INITIALIZE]: (state, action) => initialState,
     [CHANGE_INPUT]: (state, action) => {
         const {name , value} = action.payload;
         return state.set(name, value);
     }
 }, initialState);
+
+```
+
+#### 04) React-router-dom의 withRouter
+
+- 라우트가 아닌 컴포넌트에서 라우터에서 사용하는 객체인 location, history, match를 사용하려면 withRouter라는 HoC를 사용해야 한다.
+
+[구현 예시]
+
+```javascript
+
+import React from 'react';
+import {withRouter} from 'react-router-dom';
+
+const ShowPageInfo = withRouter(({match, location}) => {
+    return <div>현재 위치 : {location.pathname}</div>
+});
+
+export default ShowPageInfo
 
 ```
