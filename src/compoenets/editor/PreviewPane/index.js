@@ -2,15 +2,16 @@
 import React from 'react';
 import styles from './index.scss';
 import classNames from 'classnames/bind';
+import MarkdownRedner from '../../common/MarkdownRender';
 
 const cx = classNames.bind(styles);
 
-const PreviewPane = ({children}) => {
+const PreviewPane = ({title, markdown}) => {
 
     return(
         <div className={cx('preview-pane')}>
-            <h1 className={cx('title')}>제목</h1>
-            <div>내용</div>
+            <h1 className={cx('title')}>{title}</h1>
+            <div><MarkdownRedner markdown = {markdown}/></div>
         </div>
     );
 };

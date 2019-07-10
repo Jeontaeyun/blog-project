@@ -1,0 +1,63 @@
+@import '../../../styles/utils.scss';
+
+.markdown-render {
+    // 인용문에 대한 스타일링
+    blockquote {
+        border-left: 4px solid $oc-red-6;
+        padding: 1rem;
+        background: $oc-gray-1;
+        margin-left: 0;
+        margin-rigth: 0;
+        p{
+            margin: 0;
+        }
+    }
+
+    h1, h2, h3, h4 {
+        font-weight: 500;
+    }
+
+    h1, h2, h3, h4, h5, p {
+        code{
+            font-family: 'D2 Coding';
+            background: $oc-gray-0;
+            padding: 0.25rem;
+            color: $oc-red-6;
+            border: 1px solid $oc-gray-2;
+            border-radius: 2px;
+        }
+    }
+
+    code[class*='language-'], pre[class*='language-']{
+        font-family: 'D2 Coding';
+    }
+    
+    a{
+        color: $oc-red-6;
+        &:hover {
+            color: $oc-red-5;
+            text-decoration: underline;
+        }
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    table, th, td {
+        border: 1px solid $oc-gray-4;
+    }
+
+    th, td {
+        font-size: 0.9rem;
+        padding: 0.25rem;
+        text-align: left;
+    }
+
+    img {
+        max-width: 100%;
+        margin: 0 auto;
+        display : block;
+    }
+}
