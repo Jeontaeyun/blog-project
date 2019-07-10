@@ -10,6 +10,7 @@ const Div = ({children, ...rest}) => <div {...rest}>{children}</div>
 const Button = ({children, to, onClick, disabled, theme = 'default'}) => {
     
     // 이와 같이 props 값을 조작해서 컴포넌트를 선택적으로 주어줄 수도 있다.
+    
     const Element = (to && !disabled)? Link : Div;
 
     return(
