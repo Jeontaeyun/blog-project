@@ -138,6 +138,8 @@ Prismjs    | 코드 블록을 아름답게 꾸며주는 라이브러리
 createAction | - Redux의 액션을 쉽게 생성해주는 함수<br>- ``` export const decrement = createAction('typeName') ```
 handleActions | - 기존의 switch 문으로 구현된 리듀서를 쉽게 구현하는 함수
 
+- createAction 함수는 액션 생성 함수를 간단하게 만들어주며 파라미터를 넣어 호출하면 **payload**라는 키에 받은 값을 넣어 객체로 만들어줍니다.
+
 [구현 예시]
 
 ```javascript
@@ -181,7 +183,68 @@ export default handleActions({
 
 ```
 
-#### 04) React-router-dom의 withRouter
+#### 04) Ducks 파일 구조
+
+- 리덕스에서 사용하는 파일들은 일반적으로 액션 타입, 액션 생성 함수, 리듀서 이렇게 세 종류로 분리하여 관리합니다. 하지만 이러한 번거로움을 '액션타입, 액션 생성 함수, 리듀서'를 모두 한 파일에 모듈화하여 관리하면서 효율적으로 관리하는 파일 구조가 Ducks 구조입니다.
+
+#### 05) react-pender 라이브러리
+
+- PENDING, SUCCESS, FAILURE에 대한 액션 타입을 정의해야 하고, 리듀서에서도 이 액션들에 따라 요청 상태를 바꿔주는 작업을 할 시 이 작업을 자동화하기 위해 redux-pender 라이브러리를 사용한다.
+
+[하나의 비동기 작업 관리 코드]
+
+```javascript
+
+import {pender} from 'redux-pender';
+...
+export default reducer({
+    ...pender({
+        type: NAME,
+        // onPending: (state, action) => state,
+        // onFailure: (state, action) => state
+        // 위의 코드를 통해서 요청 중일 때와 실패했을 때 추가로 해야할 작업을 정의할 수 있다.
+        onSuccess: (state,action) => {
+            const {title, body} = action.payload.daya;
+            return (
+                data: {
+                    title,
+                    body
+                }
+            )
+        }
+    })
+})
+
+```
+
+[다수의 비동기 작업 관리 코드]
+
+```javascript
+
+import {pender, applyPenders} from 'redux-pender';
+...
+export default applyPender(reducer,[
+    {
+        type: NAME,
+        // onPending: (state, action) => state,
+        // onFailure: (state, action) => state
+        // 위의 코드를 통해서 요청 중일 때와 실패했을 때 추가로 해야할 작업을 정의할 수 있다.
+        onSuccess: (state,action) => {
+            const {title, body} = action.payload.daya;
+            return ({
+                data: {
+                    title,
+                    body
+                    }
+            );
+    }
+        
+
+```
+
+### (01) 그 외
+
+#### 01) React-router-dom의 withRouter
 
 - 라우트가 아닌 컴포넌트에서 라우터에서 사용하는 객체인 location, history, match를 사용하려면 withRouter라는 HoC를 사용해야 한다.
 
@@ -199,3 +262,23 @@ const ShowPageInfo = withRouter(({match, location}) => {
 export default ShowPageInfo
 
 ```
+
+#### 02) moment 라이브러리
+
+- 날짜를 다양한 형식의 텍스트로 변환해주는 라이브러리
+
+- ``` yarn add moment ``` 를 통해서 설치할 수 있다.
+
+[구현 예시]
+
+
+```javascript
+
+import moment from 'moment';
+
+...
+
+moment($date);
+
+```
+
