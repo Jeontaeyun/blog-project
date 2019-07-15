@@ -23,7 +23,9 @@ class Post extends Component {
 
     render() {
         const {loading, post} = this.props;
-
+        //console.log(this.props);
+        //이때 console.log를 찍어봤자 DidMount된 후에 initialize가 되므로 적용되지 않는다.
+     
         if(loading) return null;
 
         const {title, body, publishedDate, tags} = post.toJS();

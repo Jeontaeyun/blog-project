@@ -16,7 +16,7 @@ const PostInfo = (props) => {
                 <div className={cx('tags')}>
                     {tags && tags.map(tag => <Link key={tag} to={`/tag/${tag}`}>#{tag}</Link>)}
                 </div>
-                <div className={cx('date')}>{moment(publishedDate)}</div>
+                <div className={cx('date')}>{moment(publishedDate).format('ll')}</div>
             </div>
         </div>
     </>

@@ -52,6 +52,7 @@
     "postcss-preset-env": "6.6.0",
     "postcss-safe-parser": "4.0.1",
     "prismjs": "^1.16.0",
+    "query-string": "^6.8.1",
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
@@ -62,6 +63,7 @@
     "redux": "^4.0.1",
     "redux-actions": "^2.6.5",
     "redux-pender": "^2.0.12",
+    "remove-markdown": "^0.3.0",
     "resolve": "1.10.0",
     "sass-loader": "^7.1.0",
     "semver": "6.0.0",
@@ -143,5 +145,6 @@
     "presets": [
       "react-app"
     ]
-  }
+  },
+  "proxy": "http://localhost:4000"
 }

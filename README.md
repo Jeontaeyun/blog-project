@@ -204,7 +204,7 @@ export default reducer({
         // onFailure: (state, action) => state
         // 위의 코드를 통해서 요청 중일 때와 실패했을 때 추가로 해야할 작업을 정의할 수 있다.
         onSuccess: (state,action) => {
-            const {title, body} = action.payload.daya;
+            const {title, body} = action.payload.data;
             return (
                 data: {
                     title,
@@ -226,8 +226,9 @@ import {pender, applyPenders} from 'redux-pender';
 export default applyPender(reducer,[
     {
         type: NAME,
-        // onPending: (state, action) => state,
-        // onFailure: (state, action) => state
+        // onPending: (state, action) => state      요청중
+        // onFailure: (state, action) => state      요청실패
+        // onSuccess: (state, action) => state      요청완료
         // 위의 코드를 통해서 요청 중일 때와 실패했을 때 추가로 해야할 작업을 정의할 수 있다.
         onSuccess: (state,action) => {
             const {title, body} = action.payload.daya;
@@ -237,8 +238,12 @@ export default applyPender(reducer,[
                     body
                     }
             );
-    }
-        
+            }
+        }
+    },
+    {type: OTHER , onSuccess: (state,action) => ...},
+    {type: OTHER , onSuccess: (state,action) => ...}
+]); 
 
 ```
 

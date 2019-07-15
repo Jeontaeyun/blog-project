@@ -14,16 +14,16 @@ const GET_POST = 'post/GET_POST';
 export const getPost = createAction(GET_POST, api.getPost);
 //initial state
 const initialState = Map({
-    post: Map({})
+    post : Map({})
 });
-
 
 //reducer
 export default handleActions({
     ...pender({
         type: GET_POST,
         onSuccess: (state, action) => {
-            const { data: post } = action.payload;
+            const {data : post} = action.payload;
+            console.log(action.payload);
             return state.set('post', fromJS(post));
         }
     })

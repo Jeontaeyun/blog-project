@@ -4,7 +4,9 @@ import EditorPaneContainer from '../containers/editor/EditorPaneContainer';
 import PreviewPaneContainer from '../containers/editor/PreviewPaneContainer';
 import EditorHeaderContainer from '../containers/editor/EditorHeaderContainer';
 
-const EditorPage = () => {
+// match는 React-Router-Dom에서 주는 props이다.
+const EditorPage = ({match}) => {
+
     return(
         <div>
             <EditorTemplate
