@@ -13,6 +13,8 @@ useEffect는 컴포넌트가 마운트 될 때 반드시 한 번 실행되기 �
 
 Hooks 문법을 적용한 구조를 짜고 싶었으나 로직 자체가
 Hooks 문법과 맞지 않아서 한계에 봉착했다.
+
+이 부분의 로직에 대해서 고민해보자.
 */
 class ModalWrapper extends Component {
     state = {

@@ -1,23 +1,26 @@
 import React, {Component} from 'react';
-import Header from '../../compoenets/common/Header';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as baseActions from '../../store/modules/base';
-class HeaderContainer extends Component{
+import Footer from '../../compoenets/common/Footer';
+class FooterContainer extends Component{
     
-    handleRemove = () => {
-        const {BaseActions} = this.props;
-        BaseActions.showModal('remove');
-    }
+    handleLoginClick = async () => {
+        const {BaseActions, logged}= this.props;
+        if(logged){
+            return BaseActions.logout();
+        }
+        else{
+            return BaseActions.showModal('login');
+        }
+    };
 
     render(){
-        const {handleRemove} = this;
-        const{ match , logged } = this.props;
-        const {id} = match.params;
-        
+        const {handleLoginClick} = this;
+        const {logged} = this.props;
         return(
-           <Header postId={id} onRemove={handleRemove} logged={logged}/>
+           <Footer onLoginClick = {handleLoginClick} logged={logged}/>
         );
     }
 }
@@ -30,4 +33,4 @@ export default connect(
     (dispatch) => ({
         BaseActions: bindActionCreators(baseActions,dispatch)
     })
-)(withRouter(HeaderContainer));
+)(withRouter(FooterContainer));
