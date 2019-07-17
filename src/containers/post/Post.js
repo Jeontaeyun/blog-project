@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-
+import * as baseActions from '../../store/modules/base';
 import * as postActions from '../../store/modules/post';
 import PostBody from '../../compoenets/post/PostBody';
 import PostInfo from '../../compoenets/post/PostInfo';
@@ -17,6 +17,11 @@ class Post extends Component {
         }
     }
 
+    componentWillMount() {
+        const {BaseActions} = this.props;
+        BaseActions.initialize();
+    }
+    
     componentDidMount() {
         this.initialize();
     }
@@ -49,6 +54,7 @@ export default connect(
         loading: state.pender.pending['post/GET_POST']      // 로딩 상태
     }),
     (dispatch) => ({
-        PostActions : bindActionCreators(postActions, dispatch)
+        PostActions : bindActionCreators(postActions, dispatch),
+        BaseActions : bindActionCreators(baseActions, dispatch)
     })
 )(Post);

@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /.pnp
+/stories
 .pnp.js
 
 # testing

@@ -287,3 +287,27 @@ moment($date);
 
 ```
 
+#### 03) STORY BOOK
+
+- React 프론트엔드 개발을 할 때 컴포넌트 기반의 View를 위한 UI 개발 툴.
+
+- 이를 통해 컴포넌트 단위의 View를 볼 수 있어 컴포넌트를 개발하는데 큰 도움을 준다.
+
+- Story book은 Container가 아닌 **Presenter 컴포넌트에 집중을 해서 이를 설계해주고 보여주는 기능에 초점을 둔 툴**이다.
+
+    - ``` cd my-project-directory ```
+    
+    - ``` yarn add global @storybook/cli ```
+
+    - ``` getstorybook ```
+
+    - ``` yarn storybook ```
+
+- 스토리북은 앱 밖에서 따로 동작하는 어플리케이션이다.
+
+
+
+
+
+
+
