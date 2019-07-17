@@ -16,11 +16,6 @@ class Post extends Component {
             console.log(e);
         }
     }
-
-    componentWillMount() {
-        const {BaseActions} = this.props;
-        BaseActions.initialize();
-    }
     
     componentDidMount() {
         this.initialize();

@@ -7,7 +7,7 @@ import LoginModalContainer from '../modal/LoginModalContainer';
 class Base extends Component {
     initialize = async () => {
         const {BaseActions} = this.props;
-        BaseActions.checkLogin();
+        await BaseActions.checkLogin();
     };
 
     componentDidMount() {

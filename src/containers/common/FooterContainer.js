@@ -9,9 +9,16 @@ class FooterContainer extends Component{
     handleLoginClick = async () => {
         const {BaseActions, logged}= this.props;
         if(logged){
-            return BaseActions.logout();
+            try {
+                await BaseActions.logout();
+                window.location.reload();       //페이지 새로고침
+            }
+            catch(e){
+                console.log(e);
+            }
         }
         else{
+            BaseActions.initializeLoginModal();
             return BaseActions.showModal('login');
         }
     };
