@@ -356,6 +356,30 @@ export default function asyncComponent(getComponent) {
 
 ```
 
+[코드 스플리팅을 위한 웹팩 설정]
+
+```javascript
+
+entry: {
+      app: paths.appIndexJs,
+      vendor: [
+        require.resolve('./polyfillls'),
+        'react',
+        'react-dom',
+        'react-router-dom',
+        'redux',
+        'axios',
+        'codemirror',
+        'prismjs'
+      ]
+    }
+
+(...)
+
+
+
+```
+
 #### 05) 서버사이드 렌더링 | Server-Side-Rendering(SSR)
 
 - 웹 브라우저에서 리액트를 불러와 컴포넌트를 렌더링 하는 것이 아니라, 서버에서 비리 렌더링하여 HTML을 생성한 후 웹 브라우저에 전달하는 렌더링 방식.
@@ -367,6 +391,30 @@ export default function asyncComponent(getComponent) {
 장점 | 01. 검색 엔진 최적화(SEO) <br/>02. 유저 경험 개선 <br/> 
 단점 | 01. 서버의 자원이 많이 소모되어 서버 성능에 무리가 갈 수 있습니다. <br/> 02. 서버사이드렌더링은 검색 엔진 최적화와 초기 사용자 경험에만 중요하다.
 
+#### 06) React-helmet을 이용한 HEAD 태그 작성
+
+- ``` yarn add react-helmet ```을 통해서 Head태그의 meta 태그를 쉽게 바꿀 수 있다.
+
+```javascript
+
+import React from 'react';
+import {Helmet} from 'react-helmet';
+(...)
+
+return(
+    <>
+    (...)
+        <Helmet>
+            <meta charSet='utf-8'/>
+            <title>My title</title>
+            <link rel='canonical' href='http://mysite.com/example'/>
+        </Helmet>
+    </>
+)
+
+```
+
+- 이를 사용하면 위와같이 일반 HTML처럼 XML 형태로 작성할 수 있습니다. 한 까지 주의할 점은 JSX이기 때문에 **꼭 태그를 닫아 주어야 한다는 것입니다.**
 
 ## 03. 프로젝트 고찰
 
