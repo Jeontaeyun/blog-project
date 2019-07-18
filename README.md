@@ -247,7 +247,7 @@ export default applyPender(reducer,[
 
 ```
 
-### (01) 그 외
+### (05) 그 외
 
 #### 01) React-router-dom의 withRouter
 
@@ -306,8 +306,80 @@ moment($date);
 - 스토리북은 앱 밖에서 따로 동작하는 어플리케이션이다.
 
 
+#### 04) 코드 스플리팅 | Code Splitting
+
+- webpack에서 프로젝트를 번들링할 때 팡리 하나가 아니라 파일 여러 개로 분리시켜서 결과물을 만들 수 있습니다. 이를 통해 페이지를 로딩할 때 한꺼번에 불러오는 것이 아니라 필요한 시점에 불러올 수 있습니다.
+
+- SPA의 단점은 페이지 로딩 속도가 지연될 수 있다는 것입니다. 로딩 속도가 지연되는 이유는 자바스크리비트 번들 파일에 모든 애플리케이션의 로직을 불러오므로 규모가 커지면서 용량도 커지기 때문입니다. 이 문제를 코드 스플리팅(Code Splitting)으로 해결할 수 있습니다.
+
+[코드 스플리팅을 위해 생성하는 함수]
+
+```javascript
+
+/* 컴포넌트를 비동기적으로 불러올 수 있게 하는 함수*/
+
+import React from 'react';
+
+export default function asyncComponent(getComponent) {
+    class AsyncComponent extends React.Component {
+        static Component = null;
+
+        state = {Component: AsyncComponent.Component};
+
+        constructor(props){
+            super(props);
+            if(AsyncComponent.Component) return;
+            getComponent().then(({default : Component}) => {
+                AsyncComponent.Component = Component;
+                this.setState({Component});
+            })
+        }
+        render(){
+            const {Component} = this.state;
+            if(Component){
+                return <Component {...this.props}/>
+            }
+            return null;
+        }
+    }
+    /*
+    Dynamic Import라는 웹팩 내장 기능을 사용해서 코드 스플리팅을 진행한다. 
+    서버사이드 렌더링과 코드 스플리팅을 함께 구현할 때 발생할 수 있는 깜빡임 현상을 해결하는 데 사용합니다.
+    */
+    AsyncComponent.getComponent = () => {
+        return getComponent().then(({default : Component}) => {
+            AsyncComponent.Component = Component;
+        });
+    }
+    return AsyncComponent;
+}
+
+```
+
+#### 05) 서버사이드 렌더링 | Server-Side-Rendering(SSR)
+
+- 웹 브라우저에서 리액트를 불러와 컴포넌트를 렌더링 하는 것이 아니라, 서버에서 비리 렌더링하여 HTML을 생성한 후 웹 브라우저에 전달하는 렌더링 방식.
+
+- 서버사이드 렌더링은 다음과 같은 두 가지 이유로 크게 사용됩니다.
+
+서버사이드 렌더링 | 설명
+------------ | ----
+장점 | 01. 검색 엔진 최적화(SEO) <br/>02. 유저 경험 개선 <br/> 
+단점 | 01. 서버의 자원이 많이 소모되어 서버 성능에 무리가 갈 수 있습니다. <br/> 02. 서버사이드렌더링은 검색 엔진 최적화와 초기 사용자 경험에만 중요하다.
 
 
+## 03. 프로젝트 고찰
 
+### (01) 리액트에 대한 전반적인 이해
 
+### (02) 코드 스플리팅과 SSR의 필요성
+
+> 프로젝트의 빌딩 파일이 1MB를 넘어 페이지 로딩 속도가 느려지면 코드 스플리팅을 진행하고, 서비스가 콘텐츠 기반이며, SEO(검색엔진최적화)와 초기 로딩 속도를 개선해야할 때는 서버사이드 렌더링(SSR)을 도입하는 것을 추천한다.
+
+해당 프로젝트를 통해서 코드 스플리팅과 서버사이드 렌더링이 필요할 때에 대해 알게되고, 이를 구현하는 방법에 대해 알게 되었다.
+지난 <SNS 프로젝트>에서 사용한 **NEXT.js에서는 자동으로 코드 스플리팅을 해주고, getinitialprops 라이프 사이클을 통해서 쉽게 서버 사이드 렌더링을 할 수 있다.** 리액트를 통해서 하는 법과 넥스트를 통해서 하는 법 모두 정리해두고 앞으로 진행할 프로젝트에서 요구에 맞게 사용하도록 하자.
+
+### (03) Webpack 과 Build
+
+> 프로젝트의 기능적인 면을 완성해도 앱은 webpack 개발 서버에서 제공하기 때문에 다른 사람들에게 웹 애플리케이션을 보여주기 위해서는 **빌드 작업을 거치고 서버에서 정적 파일로 제공하도록 설정해야 합니다.**
 

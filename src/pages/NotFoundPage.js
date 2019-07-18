@@ -1,9 +1,10 @@
 import React from 'react';
+import NotFound from '../compoenets/common/NotFound';
 
-const NotFoundPage = () => {
+const NotFoundPage = ({history}) => {
     return(
         <div>
-            NotFoundPage
+            <NotFound onGoBack={history.goBack}/>
         </div>
     );
 };
