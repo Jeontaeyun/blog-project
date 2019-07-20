@@ -5,7 +5,8 @@ import * as baseActions from '../../store/modules/base';
 import * as postActions from '../../store/modules/post';
 import PostBody from '../../compoenets/post/PostBody';
 import PostInfo from '../../compoenets/post/PostInfo';
-
+import {Helmet} from 'react-helmet';
+import removeMd from 'remove-markdown';
 class Post extends Component {
     initialize = async () => {
         const {PostActions, id} = this.props;
@@ -32,6 +33,12 @@ class Post extends Component {
         
         return(
             <div>
+            {body&&
+                <Helmet>
+                    <title>{title}</title>
+                    <meta name="description" content={removeMd(body).slice(0,200)}/>
+                </Helmet>
+            }
                 <PostInfo
                     title = {title}
                     publishedDate = {publishedDate}

@@ -393,7 +393,7 @@ entry: {
 
 #### 06) React-helmet을 이용한 HEAD 태그 작성
 
-- ``` yarn add react-helmet ```을 통해서 Head태그의 meta 태그를 쉽게 바꿀 수 있다.
+- ``` yarn add react-helmet ```을 통해서 Head태그의 meta 태그를 JSX로 직접 태그를 작성하듯 쉽게 바꿀 수 있다.
 
 ```javascript
 

@@ -85,7 +85,7 @@ module.exports = {
   servedPath: getServedPath(resolveApp('package.json')),
   globalStyles: resolveApp('src/styles'),
   ssrJs : resolveApp('src/ssr.js'),
-  ssrBuild : resolveApp('../../blogproject-back/src/ssr')
+  ssrBuild : resolveApp('../blogproject-back/src/ssr')
 };
 
 

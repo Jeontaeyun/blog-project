@@ -2,6 +2,7 @@
   "name": "blogproject",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "@babel/core": "7.4.3",
     "@storybook/cli": "^5.1.9",
@@ -18,7 +19,7 @@
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "classnames": "^2.2.6",
     "codemirror": "^5.48.0",
-    "css-loader": "2.1.1",
+    "css-loader": "^3.1.0",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
     "eslint": "^5.16.0",
@@ -82,7 +83,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "build:server" : "node scripts/build.server.js",
+    "build:server": "node scripts/build.server.js",
     "test": "node scripts/test.js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
