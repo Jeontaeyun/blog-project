@@ -30,6 +30,8 @@ const render = async (ctx) => {
         const { component } = route;
         const { preload } = component;
         if(!preload) return;
+        // preload가 있다면, store.dispatch와 params를 넣어 preload를 promise 객체로 받은 후
+        // promises로 모은다. 
 
         const {params} = match;
         // Route의 props로 받는 match와 동일한 객체입니다.
@@ -68,7 +70,8 @@ const render = async (ctx) => {
         ctx.status = 404;
         // HTTP 상태를 404로 반환
     }
-
+    // 이 설정을 해주어야지 renderStatic()이 서버쪽에서 정상적으로 동작한다.
+    Helmet.canUseDOM = false;
     const helmet = Helmet.renderStatic();
     // helet으로부터 받은 데이터를 renderStatic을 이용해 바인딩
     // renderStatic은 한번 렌더링 작업을 완료한 후 실행해야 합니다.
