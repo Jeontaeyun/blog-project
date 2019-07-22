@@ -5,6 +5,7 @@ import {Provider} from 'react-redux';
 import configure from './store/configure';
 import routes from './routes';
 import axios from 'axios';
+import transit from 'transit-immutable-js';
 
 import App from './compoenets/App';
 import {Helmet} from 'react-helmet';
@@ -70,13 +71,15 @@ const render = async (ctx) => {
         ctx.status = 404;
         // HTTP 상태를 404로 반환
     }
+    // < 문자는 보안 때문에 유니코드 문자인 \\u003c로 치환해주어야 합니다.
+    const preloadedState = JSON.stringify(transit.toJSON(store.getState())).replace(/</g, '\\u003c');
     // 이 설정을 해주어야지 renderStatic()이 서버쪽에서 정상적으로 동작한다.
     Helmet.canUseDOM = false;
     const helmet = Helmet.renderStatic();
     // helet으로부터 받은 데이터를 renderStatic을 이용해 바인딩
     // renderStatic은 한번 렌더링 작업을 완료한 후 실행해야 합니다.
 
-    return {html, helmet};
+    return {html, preloadedState , helmet};
 }
 
 export default render;

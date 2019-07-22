@@ -73,6 +73,8 @@
     "semver": "6.0.0",
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.3",
+    "transit-immutable-js": "^0.7.0",
+    "transit-js": "^0.8.861",
     "ts-pnp": "1.1.2",
     "url-loader": "1.1.2",
     "webpack": "4.29.6",
@@ -153,7 +155,6 @@
       "react-app"
     ]
   },
-  "proxy": "http://localhost:4000",
   "devDependencies": {
     "@storybook/addon-actions": "^5.1.9",
     "@storybook/addon-links": "^5.1.9",

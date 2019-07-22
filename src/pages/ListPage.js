@@ -27,6 +27,7 @@ const ListPage = ({match}) => {
 List.preload = (dispatch, params) => {
     const {page = 1} = params;
     const ListActions = bindActionCreators(listActions, dispatch);
+    console.log(ListActions.getList(page));
     return ListActions.getList(page);
 }
 
