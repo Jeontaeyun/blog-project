@@ -131,6 +131,7 @@ module.exports = function(webpackEnv) {
     entry: {
       app: paths.appIndexJs,
       vendor: [
+        require.resolve('./polyfills'),
         'react',
         'react-dom',
         'react-router-dom',

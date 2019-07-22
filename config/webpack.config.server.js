@@ -129,6 +129,7 @@ module.exports = function(webpackEnv) {
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: paths.ssrJs,
+    target: 'node',
     output: {
       // The build folder.
       path: isEnvProduction ? paths.ssrBuild : undefined,
@@ -136,17 +137,9 @@ module.exports = function(webpackEnv) {
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
-      filename: isEnvProduction
-        ? 'render.js'
-        : isEnvDevelopment && 'static/js/bundle.js',
+      library: 'render',
       libraryTarget: 'commonjs2',
-      // TODO: remove this when upgrading to webpack 5
-      futureEmitAssets: true,
-      // There are also additional JS chunk files if you use code splitting.
-      chunkFilename: isEnvProduction
-        ? 'static/js/[name].[contenthash:8].chunk.js'
-        : isEnvDevelopment && 'static/js/[name].chunk.js',
-      // We inferred the "public path" (such as / or /my-project) from homepage.
+      filename: 'render.js',
       // We use "/" in development.
       publicPath: publicPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
@@ -157,7 +150,6 @@ module.exports = function(webpackEnv) {
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
-          
     },
     optimization: {
       minimize: isEnvProduction,
@@ -227,12 +219,8 @@ module.exports = function(webpackEnv) {
       // Automatically split vendor and commons
       // https://twitter.com/wSokra/status/969633336732905474
       // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-      splitChunks: {
-        name : 'vendor'
-      },
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
-      runtimeChunk: true,
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
@@ -457,8 +445,9 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
-      // Generates an `index.html` file with the <script> injected.
+      // 여기서는 환경변수 관련 플러그인만 적용해주면 됩니다.
       new webpack.DefinePlugin(env.stringified),
+      // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
           {},
