@@ -28,6 +28,15 @@
 
 06. **styles** : 폰트, 색상, 반응형 디자인 도구, 그림자 생성 함수 등 프로젝트에서 전역적으로 필요한 스타일 관련 코드 보관하는 디렉토리
 
+### (03) 프로젝트 목적
+
+[X] CRA(Create-React-App)으로 리액트 프로젝트를 하는 방법 익히기
+
+[X] 리액트 프레임워크에 대한 컨셉 전반적으로 익히기
+
+[X] 웹팩과 바벨 등 부수적인 기능 익히기
+
+[X] 코드스플리팅과 SSR에 대한 구현 방법 익히기
 
 ## 02. 프로젝트 이론
 
@@ -422,19 +431,175 @@ return(
 
 #### 07) transit-js transit-immutable-js
 
-
 ## 03. 프로젝트 고찰
 
-### (01) 리액트에 대한 전반적인 이해
+### (01) 리액트 프레임 워크에 대한 전반적인 이해
 
-### (02) 코드 스플리팅과 SSR의 필요성
+ 해당 프로젝트를 진행하며 리액트 프레임 워크에 대한 컨셉과 Hooks 문법을 사용하기 이전의 React에 대해서 이해할 수 있게 되었다.
+ 내가 생각하기에 리액트의 가장 큰 장점은 컴포넌트 기반인 것 같다. **처음으로 웹 개발에 발을 들이고 HTML5, JavaScript, CSS3만을 사용할 때는 HTML 코드만 길이가 너무 크고 관리가 안되었다면** 리액트를 사용하고 난 후에는 해당 컴포넌트에 관한 파일을 수정만 해주면 되니 **유지보수가 더 편리해졌다**.
+
+구분 | 설명
+--- |--------------------------------------------------------------------------------------
+리액트 사용 전 | 프레임 워크를 사용하기 전에는 하나의 HTML 파일에서 각각의 class 와 컴포넌트를 직접 찾고 해당 컴포넌트를 수정하는 번거로움이 있었다.
+리액트 사용 후 | 리액트 프레임워크를 사용한 후 반복되는 컴포넌트는 하나의 파일로 관리가 편해지고, 클래스 이름의 중복에 대한 고민을 없앨 수 있었다. 또한 해당 컴포넌트 별로의 동작에 대한 기술이 가능하기에 컴포넌트 단위로 구현후 재사용성이 용이해진다는 것을 체감하였다.
+
+다만, 컴포넌트를 실제로 사용함에 있어서 해당 컴포넌트 내의 **Props를 오타내거나 잊어 버릴 경우 발생하는 번거로움이 조금 있었다.** 이부분을 어떻게 해결할 수 있을지에 대한 해결책을 강구해야 할 것 같다.
+
+- 리액트 사용 후 컴포넌트의 재사용성과 코드의 유지 보수가 쉬워졌다.
+
+- 다만, 컴포넌트에 들어가는 Props값에 대한 재확인 문제가 발생하여 이를 보완할 수 있는 방법을 알아보아야겠다.
+
+### (02) Next를 사용하지 않는 React 기반의 SSR의 원리
+
 
 > 프로젝트의 빌딩 파일이 1MB를 넘어 페이지 로딩 속도가 느려지면 코드 스플리팅을 진행하고, 서비스가 콘텐츠 기반이며, SEO(검색엔진최적화)와 초기 로딩 속도를 개선해야할 때는 서버사이드 렌더링(SSR)을 도입하는 것을 추천한다.
 
-해당 프로젝트를 통해서 코드 스플리팅과 서버사이드 렌더링이 필요할 때에 대해 알게되고, 이를 구현하는 방법에 대해 알게 되었다.
-지난 <SNS 프로젝트>에서 사용한 **NEXT.js에서는 자동으로 코드 스플리팅을 해주고, getinitialprops 라이프 사이클을 통해서 쉽게 서버 사이드 렌더링을 할 수 있다.** 리액트를 통해서 하는 법과 넥스트를 통해서 하는 법 모두 정리해두고 앞으로 진행할 프로젝트에서 요구에 맞게 사용하도록 하자.
+리액트 기반 SSR 지원 프레임워크인 Next를 사용하면 좀 더 수월하게 SSR을 진행할 수 있다. 하지만, Next 이전에는 어떻게 SSR을 구현할 수 있을가에 대한 질문에 대한 답을 얻었다.
+
+- 서버에서 리액트 HTML 코드를 렌더링하는 방식을 다음과 같이 구현한다.
+
+```javascript
+
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import {StaticRouter, matchPath} from 'react-router';
+import {Provider} from 'react-redux';
+import configure from './store/configure';
+import routes from './routes';
+import axios from 'axios';
+import transit from 'transit-immutable-js';
+
+import App from './compoenets/App';
+import {Helmet} from 'react-helmet';
+
+const render = async (ctx) => {
+    const {url, origin} = ctx;          //요청에서 URL을 받아옵니다.
+    //render의 파라미터로 받는 ctx는 백엔드 Koa 서버에서 ctx가 들어가는 부분이다.
+    // 요청의 Origin 값을 baseURL로 설정하는 설정
+    axios.defaults.baseURL = origin;
+    const context = {};
+    // 요청이 들어올 때 마다 새 스토어를 생성합니다.
+    const store = configure();
+
+    const promises = [];
+    // 라우트 설정에 반복문을 돌려서 일치하는 라우트를 찾습니다.
+    routes.forEach(route =>{
+        const match = matchPath(url, route);
+        // 일치하지 않으면 무시합니다.
+        if(!match) return;
+
+        // match가 성공하면 해당 라우트가 가리키는 컴포넌트의 preload를 호출합니다.
+        // 그리고 파싱된 params를 preload 함수에 전달합니다.
+        const { component } = route;
+        const { preload } = component;
+        if(!preload) return;
+        // preload가 있다면, store.dispatch와 params를 넣어 preload를 promise 객체로 받은 후
+        // promises로 모은다. 
+
+        const {params} = match;
+        // Route의 props로 받는 match와 동일한 객체입니다.
+        // preload를 사용하여 얻은 프로미스를 promise 배열에 등록합니다.
+
+        const promise = preload(store.dispatch, params);
+        promises.push(promise);
+    }
+    );
+
+    try{
+        // 등록된 모든 프로미스를 기다립니다.
+        // 이렇게하면 preload함수가 모두 끝난 후 렌더리이을 하므로, 데이터를 받아 온 상태로 렌더링 합니다.
+        await Promise.all(promises);
+    }
+    catch(e){
+
+    }
+
+
+    // ReactDOMSAerver는 서버용 렌더링 함수입니다. 해당 함수는 컴포넌트를 렌더링하여 문자열로 만들어 줍니다.
+    // renderToString은 렌더링된 결과물을 문자열로 만들어 줍니다.
+    // 서버에서는 BrowserRouter 대신에 StaticRouter를 사용합니다.
+    const html = ReactDOMServer.renderToString(
+        <Provider store={store}>
+            {/*
+            BrowserRouter는 웹 브라우저가 아닌 HTML5 History API를 사용하여 그에 따라 렌더링하는 반면
+            StaticRoruter는 주소 값을 직접 url이라는 props로 넣어주고 이에 따라 렌더링을 합니다.
+            */}
+            <StaticRouter location={url} context={context}>
+                <App/>
+            </StaticRouter>
+        </Provider>
+    );
+    if(context.isNotFound){
+        ctx.status = 404;
+        // HTTP 상태를 404로 반환
+    }
+    // < 문자는 보안 때문에 유니코드 문자인 \\u003c로 치환해주어야 합니다.
+    const preloadedState = JSON.stringify(transit.toJSON(store.getState())).replace(/</g, '\\u003c');
+    // 이 설정을 해주어야지 renderStatic()이 서버쪽에서 정상적으로 동작한다.
+    Helmet.canUseDOM = false;
+    const helmet = Helmet.renderStatic();
+    // helet으로부터 받은 데이터를 renderStatic을 이용해 바인딩
+    // renderStatic은 한번 렌더링 작업을 완료한 후 실행해야 합니다.
+
+    return {html, preloadedState , helmet};
+}
+
+export default render;
+
+```
+
+- 원리는 ReactDOMServer.renderToString(); 메소드를 이용해 리액트 어플리케이션을 서버에 문자열형태로 제공한 후 이를 HTML형태로 변환후 response의 body를 통해서 렌더링을 해주는 방식이다.
+
+구분 | 설명
+--- | -------
+React.js | ReactDOMServer.renderToString()을 통해서 서버측에 HTML템플릿을 통해서 SSR을 구현한다.
+Next.js | getInitialProps() 라이프 사이클을 이용해서 SSR을 구현한다.
 
 ### (03) Webpack 과 Build
 
 > 프로젝트의 기능적인 면을 완성해도 앱은 webpack 개발 서버에서 제공하기 때문에 다른 사람들에게 웹 애플리케이션을 보여주기 위해서는 **빌드 작업을 거치고 서버에서 정적 파일로 제공하도록 설정해야 합니다.**
 
+CRA를 이용하면서 자연스럽게 내장된 Webpack에 대해 배울 수 있었다. Webpack 설정은 배울 수록 복잡했지만 기본적인 컨셉을 다음과 같이 가져가면 앞으로도 웹팩을 사용하는데 좋은 방향을 제시할 것으로 생각한다.
+
+- ``` npm i global webpack webpack-cli ``` 로 웹팩을 사용할 수 있다.
+
+- ``` yarn eject ``` 로 CRA에 내장된 웹팩 설정을 폴더로 끄낼 수 있다.
+
+```javascript
+
+module.exports = function(webpackEnv) {
+    (...)
+    
+    return {
+        mode : (...),
+        entry: {
+
+        },
+        output: {
+
+        },
+        optimization: {
+
+        },
+        module:{
+            // Loader를 넣는 부분입니다.
+        },
+        resolve:{
+
+        },
+        plugin:{
+
+        }
+    };
+}
+
+```
+
+구분 | 설명
+--- | ---
+mode | 웹팩 4에서 추가되어 mode가 development면 개발 용, production이면 배포용입니다. **배포용 일때는 알아서 최적화가 적용됩니다.** 따라서 기존 최적화 플러그인들이 대량으로 호환되지 않습니다.
+entry | 웹팩이 파일을 읽어들이기 시작하는 부분입니다.
+output | 웹팩의 결과물이 어떻게 나올지 설정하는 부분입니다.
+optimization | 웹팩 4에서 최적화 관련 플러그인들이 모두 이쪽 속성으로 통합되었습니다. 
+plugin | 약간의 부가적인 기능을 추가하는 부분입니다.
+module | Loader를 적용할 수 있는 부분입니다. 웹팩은 모든 파일을 모듈로 관리하는데 자바스크립트 뿐만 아니라 이미지, 폰트, 스탕리 시트도 전부 모듈로 관리합니다. 하지만 웹 팩은 자바스크립트 밖에 이해할 수 없기 때문에 나머지 파일을 웹팩이 이해할 수 있도록 로더를 추가해주어야 합니다.
