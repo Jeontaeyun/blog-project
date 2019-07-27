@@ -18,6 +18,8 @@ const PostPage = ({match}) => {
     );
 };
 
+// PostPage의 preload값을 만들어서 이를 ServerSide에 넘겨준다.
+// Next를 사용하지 않는 React 고유의 ServerSideRendering 방법
 PostPage.preload = (dispatch, params) => {
     const {id} = params;
     const PostActions = bindActionCreators(postActions, dispatch);

@@ -24,6 +24,7 @@ const ListPage = ({match}) => {
     );
 };
 
+//ServerSideRendering을 위해서 
 List.preload = (dispatch, params) => {
     const {page = 1} = params;
     const ListActions = bindActionCreators(listActions, dispatch);
