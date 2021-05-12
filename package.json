@@ -18,7 +18,7 @@
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "classnames": "^2.2.6",
-    "codemirror": "^5.48.0",
+    "codemirror": "^5.58.2",
     "css-loader": "^3.1.0",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
